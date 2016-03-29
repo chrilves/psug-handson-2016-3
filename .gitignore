@@ -1,0 +1,13 @@
+target/
+
+activator*
+
+*.idea/
+*.iml
+*~
+*.kate-swp
+*.swp
+~*
+*.out
+*.class
+*.jar
