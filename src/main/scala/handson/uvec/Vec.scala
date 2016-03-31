@@ -43,26 +43,29 @@ sealed abstract class Vec[+A] extends Product with Serializable {
 
 /** Vecteur de taille 0 */
 case object VNil extends Vec[Nothing] {
-  def map[B](f : Nothing => B) : Vec[B] = ???
+  def map[B](f : Nothing => B) : Vec[B] = VNil
 
-  def zip[B](other : Vec[B]) : Vec[(Nothing,B)] = ???
-  def ap[B](f : Vec[Nothing => B]) : Vec[B] = ???
+  def zip[B](other : Vec[B]) : Vec[(Nothing,B)] = VNil
+  def ap[B](f : Vec[Nothing => B]) : Vec[B] = VNil
 
-  def ++[B](other : Vec[B]) : Vec[B] = ???
-  def **[B](other : Vec[B]) : Vec[(Nothing,B)] = ???
+  def ++[B](other : Vec[B]) : Vec[B] = other
+  def **[B](other : Vec[B]) : Vec[(Nothing,B)] = VNil
 }
 
 /** Vecteur de taille "taille de tail" + 1 */
 final case class VCons[+A](head : A, tail : Vec[A]) extends Vec[A] {
-  def map[B](f : A => B) : Vec[B] = ???
+  def map[B](f : A => B) : Vec[B] = VCons(f(head), tail.map(f))
 
-  def zip[B](other : Vec[B]) : Vec[(A,B)] = ???
+  def zip[B](other : Vec[B]) : Vec[(A,B)] = other match {
+    case VCons(ohead, otail) => VCons((head, ohead), tail.zip(otail))
+  }
 
-  def ap[B](f : Vec[A => B]) : Vec[B] = ???
+  def ap[B](f : Vec[A => B]) : Vec[B] = f match {
+    case VCons(fhead, ftail) => VCons(fhead(head), tail.ap(ftail))
+  }
 
-  def ++[B >: A](other : Vec[B]) : Vec[B] = ???
-  
-  def **[B](other : Vec[B]) : Vec[(A,B)] = ???
+  def ++[B >: A](other : Vec[B]) : Vec[B] = VCons(head , tail ++ other)
+  def **[B](other : Vec[B]) : Vec[(A,B)] = other.map((head, _)) ++ tail ** other
 }
 
 object Vec {

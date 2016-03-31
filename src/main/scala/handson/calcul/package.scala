@@ -9,7 +9,6 @@ package object calcul {
   val x : Vec[_3, Int] = 1 |:| (2 |:|  (3 |:| VNil))
   val y : Vec[_2, Int] = 4 |:| (5 |:| VNil)
 
-/*
   val x_plus_y : Vec[_5, Int] = x ++ y
   val x_prod_y : Vec[_6, (Int, Int)] = x ** y
 
@@ -21,7 +20,7 @@ package object calcul {
 
   val x_zip_z : Vec[_3, (Int, Int => Int)] = x zip z
   val x_ap_z  : Vec[_3, Int] = x ap z
-*/
+
   type _0 = Z
   type _1 = S[Z]
   type _2 = S[_1]

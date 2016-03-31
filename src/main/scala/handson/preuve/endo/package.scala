@@ -8,7 +8,6 @@ package object endo {
     def |:|[n <: Nat, B >: A](v : Vec[n , B]) = VCons(self , v)
   }
 
-  /*
   val x : Vec[_3, Int] = 1 |:| (2 |:|  (3 |:| VNil))
   val y : Vec[_2, Int] = 4 |:| (5 |:| VNil)
 
@@ -20,6 +19,4 @@ package object endo {
 
   val x_zip_z : Vec[_3, (Int, Int => Int)] = x zip z
   val x_ap_z  : Vec[_3, Int] = x ap z
-
-  */
 }
